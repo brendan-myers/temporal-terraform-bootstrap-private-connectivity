@@ -16,11 +16,12 @@ provider "temporalcloud" {
 }
 
 module "vpc" {
-    source      = "../../modules/vpc"
-    region      = var.region
-    vpc_cidr    = var.vpc_cidr
-    subnet_cidr = var.subnet_cidr
-    tag_prefix  = var.namespace
+    source        = "../../modules/vpc"
+    region        = var.region
+    vpc_cidr      = var.vpc_cidr
+    subnet_cidr   = var.subnet_cidr
+    instance_type = var.instance_type
+    tag_prefix    = var.namespace
 }
 
 module "ec2" {

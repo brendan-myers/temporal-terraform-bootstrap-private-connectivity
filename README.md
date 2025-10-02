@@ -18,8 +18,7 @@ Terraform will prompt you for a name for the Temporal Namespace and for confirma
 Find your EC2 instance in the AWS console, and connect to it with SSM (select your instance, Connect, Session Manager, Connect).
 
 ```
-sudo su ec2-user
-cd ~
+sudo su - ec2-user
 ./test.sh
 ```
 

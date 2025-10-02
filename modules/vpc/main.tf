@@ -18,6 +18,24 @@ locals {
   temporal_service_name = local.temporal_service_name_map[var.region]
 }
 
+# Make sure an AZ that supports the instance type is used
+data "aws_ec2_instance_type_offerings" "offered" {
+  location_type = "availability-zone"
+  filter {
+    name   = "instance-type"
+    values = [var.instance_type]
+  }
+}
+
+locals {
+  supported_azs = tolist(data.aws_ec2_instance_type_offerings.offered.locations)
+  chosen_az     = length(local.supported_azs) > 0 ? sort(local.supported_azs)[0] : ""
+}
+
+data "aws_availability_zone" "chosen" {
+  name = local.chosen_az
+}
+
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
@@ -31,6 +49,7 @@ resource "aws_vpc" "this" {
 resource "aws_subnet" "this" {
   vpc_id                  = aws_vpc.this.id
   cidr_block              = var.subnet_cidr
+  availability_zone_id    = data.aws_availability_zone.chosen.zone_id
   map_public_ip_on_launch = false
 
   tags = {

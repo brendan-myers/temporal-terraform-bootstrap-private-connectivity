@@ -43,43 +43,43 @@ resource "aws_instance" "this" {
   vpc_security_group_ids = [ var.security_group_id ]
   
   user_data = <<-EOF
-    #!/bin/bash
-    set -euxo pipefail
+#!/bin/bash
+set -euxo pipefail
 
-    # Fetch the Temporal CLI
-    sudo aws s3 cp s3://${var.s3_temporal_cli}/temporal /usr/local/bin/
-    sudo chmod 755 /usr/local/bin/temporal
+# Fetch the Temporal CLI
+sudo aws s3 cp s3://${var.s3_temporal_cli}/temporal /usr/local/bin/
+sudo chmod 755 /usr/local/bin/temporal
 
-    # Create a script for testing the endpoint
-        echo "temporal env set \\
+# Create a script for testing the endpoint
+echo "temporal env set \\
 --env cloud \\
 --key address \\
---value ${var.endpoint_address}:7233
+--value ${var.endpoint_address}:7233" >> /home/ec2-user/test.sh
 
-temporal env set \\
+echo "temporal env set \\
 --env cloud \\
 --key tls-server-name \\
---value ${var.region}.aws.api.temporal.io
+--value ${var.region}.aws.api.temporal.io" >> /home/ec2-user/test.sh
 
-temporal env set \\
+echo "temporal env set \\
 --env cloud \\
 --key namespace \\
---value ${var.namespace}
+--value ${var.namespace}" >> /home/ec2-user/test.sh
 
-temporal env set --env cloud --key tls --value true
+echo "temporal env set --env cloud --key tls --value true" >> /home/ec2-user/test.sh
 
-export TEMPORAL_API_KEY=${var.temporal_api_key}
+echo "export TEMPORAL_API_KEY=${var.temporal_api_key}" >> /home/ec2-user/test.sh
 
-temporal workflow start \\
+echo "temporal workflow start \\
 --type TestWorkflow \\
 --task-queue no-workers \\
---env cloud
+--env cloud" >> /home/ec2-user/test.sh
 
-sleep 5
+echo "sleep 5" >> /home/ec2-user/test.sh
 
-temporal workflow list --env cloud" >> /home/ec2-user/test.sh
+echo "temporal workflow list --env cloud" >> /home/ec2-user/test.sh
 
-    chmod +x /home/ec2-user/test.sh
+chmod +x /home/ec2-user/test.sh
   EOF
 
   tags = {
