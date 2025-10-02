@@ -1,6 +1,6 @@
 # Temporal / AWS Private Connectivity Bootstrap
 
-Bootstraps a Temporal Cloud namespace, an AWS VPC with connectivity to the namespace, and an EC2 host (with no public connectivity) to test the connection.
+Bootstraps a Temporal Cloud namespace, an AWS VPC with private connectivity to the namespace, and an EC2 host (with no public connectivity, but with private connectivity to Temporal) to test the connection.
 
 ## Setup
 * Set the `TEMPORAL_CLOUD_API_KEY` environment variable (or [set them in the provider directly](https://registry.terraform.io/providers/temporalio/temporalcloud/latest/docs#provider-configuration) - not recommended!)
