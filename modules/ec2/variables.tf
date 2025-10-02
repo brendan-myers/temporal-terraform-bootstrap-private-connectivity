@@ -1,0 +1,10 @@
+variable "region" { type = string }
+variable "ami" { type = string }
+variable "instance_type" { type = string }
+variable "subnet_id" { type = string }
+variable "security_group_id" { type = string }
+variable "endpoint_address" { type = string }
+variable "namespace" { type = string }
+variable "temporal_api_key" { type = string }
+variable "s3_temporal_cli" { type = string }
+variable "tag_prefix" { type = string }
