@@ -5,7 +5,7 @@ Bootstraps a Temporal Cloud namespace, an AWS VPC with private connectivity to t
 ## Setup
 * Set the `TEMPORAL_CLOUD_API_KEY` environment variable (or [set them in the provider directly](https://registry.terraform.io/providers/temporalio/temporalcloud/latest/docs#provider-configuration) - not recommended!)
 * Set your AWS credentials for the Terraform AWS Provider. [Instructions here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
-* (optional) This creates an EC2 instance that doesn't have access to the public internet, but it does have access to S3. If you want to test connectivity from the EC2 instance to Temporal Cloud, then set the [`tf-temporal-cli-us-east-1`](config/common.auto.tfvars) variable to an S3 bucket containing the Temporal CLI. **Note:** this bucket must be in the same region as the AWS VPC, and the CLI binary must be built for the same architecture as the AMI specified with the [`ami`](config/common.auto.tfvars) variable. **Special second note:** If you are internal to Temporal, use the defaults (`us-east-1`) as this is already set up.
+* (optional) This creates an EC2 instance that doesn't have access to the public internet, but it does have access to S3. If you want to test connectivity from the EC2 instance to Temporal Cloud, then set the [`s3_temporal_cli`](config/common.auto.tfvars) variable to an S3 bucket containing the Temporal CLI. **Note:** this bucket must be in the same region as the AWS VPC, and the CLI binary must be built for the same architecture as the AMI specified with the [`ami`](config/common.auto.tfvars) variable. **Special second note:** If you are internal to Temporal, use the defaults (`us-east-1`) as this is already set up.
 
 
 ## Running
